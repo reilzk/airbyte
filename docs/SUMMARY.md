@@ -1,7 +1,6 @@
 # Table of contents
 
 * [Getting Started](../README.md)
-* [Tutorial](getting-started-tutorial.md)
 * [Changelog](changelog.md)
 
 ## Deployment
