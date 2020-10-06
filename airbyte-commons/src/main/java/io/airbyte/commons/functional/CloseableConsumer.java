@@ -26,4 +26,5 @@ package io.airbyte.commons.functional;
 
 import java.util.function.Consumer;
 
+// make accept throw ioexception?
 public interface CloseableConsumer<T> extends Consumer<T>, AutoCloseable {}

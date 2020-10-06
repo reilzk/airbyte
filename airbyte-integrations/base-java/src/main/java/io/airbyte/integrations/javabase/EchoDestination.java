@@ -31,17 +31,45 @@ import io.airbyte.config.Schema;
 import io.airbyte.config.StandardCheckConnectionOutput;
 import io.airbyte.config.StandardDiscoverSchemaOutput;
 import io.airbyte.singer.SingerMessage;
-import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public interface Destination {
+public class EchoDestination implements Destination {
+  private static final Logger LOGGER = LoggerFactory.getLogger(EchoDestination.class);
 
-  DestinationConnectionSpecification spec() throws IOException;
+  @Override
+  public DestinationConnectionSpecification spec() {
+    LOGGER.info("spec");
+    return null;
+  }
 
-  StandardCheckConnectionOutput check(JsonNode config) throws IOException;
+  @Override
+  public StandardCheckConnectionOutput check(JsonNode config) {
+    LOGGER.info("check. args: {}", config);
+    return null;
+  }
 
-  StandardDiscoverSchemaOutput discover(JsonNode config);
+  @Override
+  public StandardDiscoverSchemaOutput discover(JsonNode config) {
+    LOGGER.info("discover. args: {}", config);
+    return null;
+  }
 
-  CloseableConsumer<SingerMessage> write(JsonNode config, Schema schema)
-      throws IOException;
+  @Override
+  public CloseableConsumer<SingerMessage> write(JsonNode config, Schema schema) {
+    LOGGER.info("write. args: {} schema: {}", config, schema);
+
+    return new CloseableConsumer<>() {
+      @Override
+      public void close() {
+        LOGGER.info("Closing " + EchoDestination.class);
+      }
+
+      @Override
+      public void accept(SingerMessage singerMessage) {
+        LOGGER.info("SingerMessage: {}", singerMessage);
+      }
+    };
+  }
 
 }
